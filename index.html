@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title></title>
+
+		<!-- Bootstrap-->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+		<!-- my css -->
+		<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+		<!-- jQuery -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	</head>
+
+	<body>
+
+		<div class="container">
+
+			<div class="row">
+				<div id="inputArea" class="col-12">
+					<form> 
+			  			Category: <input id="newButtonText" type="text" name="btn-text">
+			  			<input id="btn-add" class="btn btn-secondary" type="submit" value="ADD">
+					</form>
+				</div>
+			</div> <!-- /row -->
+
+			<div class="row">
+				<div id="buttonArea" class="col-12"></div>
+			</div> <!-- /row -->
+
+			<div class="row">
+				
+				<div class="col-6">
+					<div>
+						<button id="btn-gif-clear" class="btn btn-secondary">Clear Gifs</button>
+					</div>
+					<div id="searchResults"></div>
+				</div>
+
+				<div class="col-6">
+					<div>
+				  		<button id="btn-fav-clear" class="btn btn-secondary">Clear Favorites</button>
+					</div>
+					<div id="userFavorites"></div>
+				</div>
+
+			</div> <!-- /row -->
+		<div> <!-- /container -->
+
+		<script type="text/javascript" src="assets/javascript/app.js"></script>
+	</body>
+</html>
+
