@@ -1,91 +1,90 @@
-// file:///F:/bootC/giftastic_project/index.html
+
+
+	// Bonus Goals
+
+	// #1
+	// Ensure your app is fully mobile responsive.
+
+	// #2
+	// Allow users to request additional gifs to be added to the page.
+	// Each request should ADD 10 gifs to the page, NOT overwrite the existing gifs.
+
+	// #3
+	// List additional metadata (title, tags, etc) for each gif in a clean and readable format.
+
+	// #4
+	// Include a 1-click download button for each gif, this should work across device types.
+	// https://www.w3schools.com/howto/howto_css_download_button.asp
+
+	// #4
+	// Integrate this search with additional APIs such as OMDB, or Bands in Town. 
+	// Be creative and build something you are proud to showcase in your portfolio
+	// 	PUBLIC API
+	// 	https://github.com/toddmotto/public-apis
+
+
+	// TENOR API
+	// https://tenor.com/gifapi/documentation
+
+	// OPEN GIF API
+	// https://www.programmableweb.com/api/open-gif
 
 
 $(document).ready(function() 
 {
-	// prevent form from submitting
-	// event.preventDefault();
-
-	// data persistance
-	// localStorage.clear()
-	// name is the key, username is value of key
-	// localStorage.setItem("name", username);
-	// localStorage.getItem("name")
-
-	// localStorage.setItem("storeData", JSON.stringify(storeData));
-
-	// JSON.parse(localStorage.getItem('user'));
-
-	// Before you can make any part of our site work, you need to create an array of strings, each one related to a topic that interests you. 
-	// Save it to a variable called topics.
-	// We chose animals for our theme, but you can make a list to your own liking.
-
-	var imgCount = 0;
 	var favCount = 0;
 
-	var topics = ["cat", "dog", "tiger"];
+	var defalutTopics = ["cat", "dog", "bird"];
 
-	updateButtonArea(topics);
+	var topics = [];
+
+	loadTopics();
 
 	var favorites = [];
 
+	loadFavorites();
 
-	if (JSON.parse(localStorage.getItem('userFavorites')) != null)
+
+	function loadFavorites()
 	{
-		favorites = JSON.parse(localStorage.getItem('userFavorites'));
+		console.log("loadFavorites()");
 
+		if (JSON.parse(localStorage.getItem('userFavorites')) != null)
+		{
+			favorites = JSON.parse(localStorage.getItem('userFavorites'));
 
-
-		updateFavoritesArea(favorites);
+			updateFavoritesArea(favorites);
+		}
 	}
 
-	//updateFavoritesArea(favorites);
-
-	// Your app should take the topics in this array and create buttons in your HTML.
-	// Try using a loop that appends a button for each string in the array.
-
-	$("#btn-add").on("click", function() 
-	{
-		event.preventDefault();
-
-		var newBtn = $("#newButtonText").val();
-
-		if (newBtn != "")
-		{
-			topics.push(newBtn);
-
-			$("#newButtonText").val("");
-
-			updateButtonArea(topics);
-		}
-	});
 
 	function updateButtonArea(theArray)
 	{
+		console.log("updateButtonArea("+theArray+")");
+
 		var buttonArea = $("#buttonArea");
 		buttonArea.empty();
 
 		for(var i = 0; i < theArray.length; i++)
 		{
 			var newButton = $("<button>");
-			newButton.text(theArray[i]);
+			newButton.text(theArray[i].toUpperCase());
 			newButton.attr("class", "btn btn-warning btn-query");
 			newButton.attr("data-btnText", theArray[i]);
-
 			buttonArea.prepend(newButton);
 		}
 	}
 
+
 	function updateFavoritesArea(theArray)
 	{
+		console.log("updateFavoritesArea("+theArray+")");
+
+		var favoritesArea = $("#userFavorites");
+		favoritesArea.empty();
+
 		if(theArray.length > -1)
 		{
-			var favoritesArea = $("#userFavorites");
-			favoritesArea.empty();
-
-		// data-still = https://media3.giphy.com/media/103JnbaqvpBFGE/200_s.gif
-		// data-animate = https://media3.giphy.com/media/103JnbaqvpBFGE/200.gif
-
 			for(var i = 0; i < theArray.length; i++)
 			{
 				var favImgDiv = $("<div>");
@@ -100,7 +99,7 @@ $(document).ready(function()
 
 				var removeButton = $("<button>")
 				removeButton.attr("id", "btn-rmv-" + i)
-				removeButton.attr("class", "btn btn-danger favCheck");
+				removeButton.attr("class", "btn btn-danger favRemove");
 				removeButton.attr("name", theArray[i] + "_s.gif");
 				// removeButton.attr("value", favButton.val());
 				removeButton.attr("data-still", theArray[i] + "_s.gif");
@@ -119,47 +118,89 @@ $(document).ready(function()
 	}
 
 
-	// When the user clicks on a button, the page should grab 10 static, non-animated gif images from the GIPHY API and place them on the page.
+	function loadTopics()
+	{
+		console.log("loadTopics()");
 
-	// When the user clicks one of the still GIPHY images, the gif should animate. If the user clicks the gif again, it should stop playing.
+		if (JSON.parse(localStorage.getItem("userQuickSelect")) != null)
+		{
+			var userQuickSelect = JSON.parse(localStorage.getItem("userQuickSelect"));
 
-	// Under every gif, display its rating (PG, G, so on).
-	// This data is provided by the GIPHY API.
-	// Only once you get images displaying with button presses should you move on to the next step.
+			for(var i = 0; i < userQuickSelect.length; i++)
+			{
+				topics.push(userQuickSelect[i]);
+			}
+		}
+		else
+		{
+			for(var i = 0; i < defalutTopics.length; i++)
+			{
+				topics.push(defalutTopics[i]);
+			}
 
-	// Add a form to your page takes the value from a user input box and adds it into your topics array. 
-	// Then make a function call that takes each topic in the array remakes the buttons on the page.
+			localStorage.removeItem("userQuickSelect");
+			localStorage.setItem("userQuickSelect", JSON.stringify(topics));
+		}
 
-	// Deploy your assignment to Github Pages.
-
-
-
-	// Bonus Goals
-
-	// Ensure your app is fully mobile responsive.
-
-	// Allow users to request additional gifs to be added to the page.
-	// Each request should ADD 10 gifs to the page, NOT overwrite the existing gifs.
-
-	// List additional metadata (title, tags, etc) for each gif in a clean and readable format.
-
-	// Include a 1-click download button for each gif, this should work across device types.
-
-	// Integrate this search with additional APIs such as OMDB, or Bands in Town. 
-	// Be creative and build something you are proud to showcase in your portfolio
-
-	// PUBLIC API
-	// https://github.com/toddmotto/public-apis
+		updateButtonArea(topics);
+	}
 
 
-//https://www.taniarascia.com/how-to-use-local-storage-with-javascript/	
-	$("#btn-fav-clear").on("click", function() {
+	$("#btn-add").on("click", function() 
+	{
+		// prevent form from submitting
+		event.preventDefault();
 
-		localStorage.clear();
+		console.log("ADD QUICK SELECT BUTTON CLICKED");
+
+		var newBtn = $("#newButtonText").val().trim().toUpperCase();
+
+		if (newBtn != "")
+		{
+			topics.push(newBtn);
+
+			$("#newButtonText").val("");
+
+			updateButtonArea(topics);
+
+			localStorage.removeItem("userQuickSelect");
+			localStorage.setItem("userQuickSelect", JSON.stringify(topics));
+		}
+	});
+
+
+	$("#btn-reset").on("click", function() 
+	{
+		// prevent form from submitting
+		event.preventDefault();
+
+		console.log("RESET QUICK SELECT BUTTON CLICKED");
+
+		if (topics.length > 0)
+		{
+			topics = [];
+
+			for(var i = 0; i < defalutTopics.length; i++)
+			{
+				topics.push(defalutTopics[i]);
+			}
+
+			updateButtonArea(topics);
+
+			localStorage.removeItem("userQuickSelect");
+			localStorage.setItem("userQuickSelect", JSON.stringify(topics));
+		}
+	});
+
+	
+	$("#btn-fav-clear").on("click", function() 
+	{
+		console.log("CLEAR FAVORITES BUTTON CLICKED");
+
+		localStorage.removeItem("userFavorites");	
+
 		favorites = [];
 		$("#userFavorites").empty();
-				//console.log(	"CLEAR LOCAL STORAGE" + "\n" + JSON.parse(localStorage.getItem('userFavorites')));
-		//localStorage.setItem("userFavorites", JSON.stringify(favorites));
 
 		favCount = 0;
 	});
@@ -167,18 +208,33 @@ $(document).ready(function()
 
 	$("#btn-gif-clear").on("click", function()
 	{
+		console.log("CLEAR GIFS BUTTON CLICKED");
+
 		$("#searchResults").empty();
 	});
 
 
 	$(document).on("click", "button.btn-query", function() 
 	{
+		console.log($(this).text().toUpperCase() + " BUTTON CLICKED");
+
 		var apiKey = "AYXRNvMf24hqgRG3UzDrrOKtm5HQv0Sj";
 		var numOfGif = 10;
 		var searchText = $(this).attr("data-btnText");
+
+		for (var j = 0; j < searchText.length; j++)
+		{
+			if(searchText.charAt(j) === " ")
+			{
+				searchText.charAt(j) = "+";
+			}
+		}
+
 		var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + searchText + "&api_key=" + apiKey + "&limit=" + numOfGif;
 
-		var gifType =  $(this).text();
+		console.log("queryURL = " + queryURL);
+
+		var gifType = $(this).text();
 
 		$.ajax({
 			url: queryURL,
@@ -207,7 +263,7 @@ $(document).ready(function()
 				newImage.attr("data-still", stillImage);
 				newImage.attr("data-animate", animatedImage);
 				newImage.attr("data-state", "still");
-				newImage.attr("data-img-type", gifType);
+				//newImage.attr("data-img-type", gifType);
 				newImage.attr("class", "gif");
 
 				var favCheck = $("<button>");
@@ -231,34 +287,23 @@ $(document).ready(function()
 		});
 	});
 
-	// Allow users to add their favorite gifs to a favorites section.
-	// This should persist even when they select or add a new topic.
-	// If you are looking for a major challenge, look into making this section persist even when the page is reloaded (via localStorage or cookies).
 
 	$(document).on("click", "button.favCheck", function() 
 	{
+		console.log("FAVORITE BUTTON CLICKED");
 
 		var favButton = $(this);
-
 		var stillImg = favButton.attr("data-still");
 		var gifImg = favButton.attr("data-animate");
 
 		var localContent = gifImg.split(".gif");
 
-		// data-still = https://media3.giphy.com/media/103JnbaqvpBFGE/200_s.gif
-		// data-animate = https://media3.giphy.com/media/103JnbaqvpBFGE/200.gif
-
-		//console.log("favButton.val() = " + favButton.val());
-
-		// check to see if image is in favorites
 		var alreadyInFavorites = false;
 		
 		if (favorites.length > -1)
 		{
 			for(var i = 0; i < favorites.length; i++)
 			{
-				//var tester = currentFavorites[i].split(".gif");
-
 				if( favorites[0] === localContent[0])
 				{
 					alreadyInFavorites = true;
@@ -269,21 +314,13 @@ $(document).ready(function()
 
 		if(!alreadyInFavorites)
 		{
-			// favButton.text("Remove");
-			// console.log("CHECKED");
-
-			// ADD TO FAVORITES
-			
-			// console.log("localContent = " + localContent[0]);
 			favorites.push(localContent[0]);
 
-			localStorage.clear();
+			localStorage.removeItem("userFavorites");	
 			localStorage.setItem("userFavorites", JSON.stringify(favorites));
-			// console.log(	"LOCAL STORAGE" + "\n" + JSON.parse(localStorage.getItem('userFavorites')))
 
 			var favImgDiv = $("<div>");
 			favImgDiv.attr("id", "fav-div-" + favCount);
-			// favImgDiv.attr("id", "???");
 
 			var newImage = $("<img>");
 			newImage.attr("src", stillImg)
@@ -315,45 +352,27 @@ $(document).ready(function()
 	$(document).on("click", "button.favRemove", function() 
 	{
 		console.log("REMOVE BUTTON CLICKED");
-		console.log("favorites = " + "\n" + favorites);
+
 		var remButton = $(this);
+		var remButton_data_animate = remButton.attr("data-animate").split(".gif");
+		var imgToRemove = remButton_data_animate[0];
 
-		var stillImg = remButton.attr("data-still");
-		var gifImg = remButton.attr("data-animate");
+		var indexToRemove = favorites.indexOf(imgToRemove);
+		favorites.splice(indexToRemove, 1);
 
-		var localContent = gifImg.split(".gif");
-
-		console.log("localContent = " + localContent[0]);
-
-		// data-still = https://media3.giphy.com/media/103JnbaqvpBFGE/200_s.gif
-		// data-animate = https://media3.giphy.com/media/103JnbaqvpBFGE/200.gif
-
-		// console.log("UNCHECKED");
-		// REMOVE FROM FAVORITES
-
-		//var idArray = favButton.attr("id").split("-");
-		//var itemToRemove = Number.parseInt(idArray[2]);
-
-		var itemToRemove = favorites.indexOf(localContent[0]);
-
-		console.log("itemToRemove = " + itemToRemove);
-
-		//favorites.splice(itemToRemove, 1);
-
-		//localStorage.clear();
-		//localStorage.setItem("userFavorites", JSON.stringify(favorites));
-
-		//$("#favoritesArea").empty();
-		//updateFavoritesArea(favorites);
-
-		//favCount--;
-
+		localStorage.removeItem("userFavorites");	
+		localStorage.setItem("userFavorites", JSON.stringify(favorites));
+		updateFavoritesArea(favorites);
+		favCount--;
 	});
 
-	// https://stackoverflow.com/questions/16893043/jquery-click-event-not-working-after-adding-class
-	// Since the class is added dynamically, you need to use event delegation to register the event handler
+
 	$(document).on("click", "img.gif", function() 
 	{
+		// console.log( $(this).attr("data-img-type").toUpperCase() + " GIF CLICKED");
+
+		console.log("GIF CLICKED");
+
 		var state = $(this).attr("data-state");
 		
 		if (state === 'still')
