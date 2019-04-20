@@ -1,9 +1,86 @@
 
+*{
+	font-size: 20px;
+	font-weight: bold;
+}
+
+body{
+	background: url(../images/old_map.png);
+}
+
 div{
-	border: 1px solid blue;
-	padding: 2px;
+	/*border: 1px solid blue;*/
+	padding: 5px;
 }
 
 button{
 	margin: 2px;
+	
+}
+
+.btn
+{
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.gif{
+	border: 2px solid #ffb999;
+}
+
+.gifDownload{
+	height: 47px;
+}
+
+#header{
+	background: url(../images/congruent_pentagon.png);
+	border: 2px solid #76efa4;
+	margin: 10px 0px 0px 0px;
+	padding: 50px 0px 50px 0px;
+	text-align: center;
+}
+
+
+#inputArea{
+	background-color: #d6d9db;
+	border: 2px solid #6c757d;
+
+	/*border: 2px solid #e3ba68;*/
+}
+
+.miniHeader{
+	background: url(../images/congruent_pentagon.png);
+	border: 2px solid #76efa4;
+	margin: 5px 0px 0px 0px;
+	text-align: center;
+	font-size: 30px;
+	overflow: auto;
+}
+
+#title{
+	font-size: 60px;
+	font-weight: bolder;
+}
+
+#subtitle{
+	font-size: 30px;
+	font-weight: bold;
+}
+
+#newButtonText{
+	width: 50%;
+	border: 2px solid #6c757d;
+}
+
+#gifArea{
+	background: url(../images/sakura.png);
+	border: 2px solid #ffb999;
+}
+
+#btn-gif-clear{
+	float: right;
+}
+
+#btn-fav-clear{
+	float: right;
 }

@@ -10,6 +10,9 @@
 		<!-- Bootstrap-->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
+		<!-- FontAwesome-->
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
 		<!-- my css -->
 		<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 
@@ -22,32 +25,40 @@
 
 		<div class="container">
 
-			<div class="row">
-				<div id="inputArea" class="col-12">
-					<form> 
-			  			Gif Type: <input id="newButtonText" type="text" name="btn-text">
-			  			<input id="btn-add" class="btn btn-primary" type="submit" value="Add">
-			  			<input id="btn-reset" class="btn btn-secondary" type="reset" value="Reset">
-					</form>
+			<div class="row" >
+				<div id="header" class="col-12">
+					<p id="title">GifTastic Safari</p>
+					<p id="subtitle">Find GIFs for all your favorite animals!</p>
 				</div>
 			</div> <!-- /row -->
 
-			<div class="row">
-				<div id="buttonArea" class="col-12"></div>
-			</div> <!-- /row -->
+		
+				<div class="row">
+					<div id="inputArea" class="col-12">
+						<form> 
+							What animal are you looking for: <input id="newButtonText" type="text" name="btn-text">
+							<input id="btn-add" class="btn btn-primary" type="submit" value="Add">
+							<input id="btn-reset" class="btn btn-secondary" type="reset" value="Reset">
+						</form>
+					</div>
+				</div> <!-- /row -->
+				<div class="row">
+					<div id="buttonArea" class="col-12"></div>
+				</div> 
+		
 
-			<div class="row">
+			<div id="gifArea" class="row">
 				
 				<div class="col-6">
-					<div>
-						<button id="btn-gif-clear" class="btn btn-secondary">Clear Gifs</button>
+					<div class="miniHeader">
+						Wild and Wonderful GIFs <button id="btn-gif-clear" class="btn btn-secondary">Clear</button>
 					</div>
 					<div id="searchResults"></div>
 				</div>
 
 				<div class="col-6">
-					<div>
-				  		<button id="btn-fav-clear" class="btn btn-secondary">Clear Favorites</button>
+					<div class="miniHeader">
+						Your Favorites <button id="btn-fav-clear" class="btn btn-secondary">Clear</button>
 					</div>
 					<div id="userFavorites"></div>
 				</div>

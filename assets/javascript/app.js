@@ -15,6 +15,7 @@
 	// #4
 	// Include a 1-click download button for each gif, this should work across device types.
 	// https://www.w3schools.com/howto/howto_css_download_button.asp
+	// https://fontawesome.com/icons/download?style=solid
 
 	// #4
 	// Integrate this search with additional APIs such as OMDB, or Bands in Town. 
@@ -32,9 +33,12 @@
 
 $(document).ready(function() 
 {
+	console.log("PAGE LOADED");
+
 	var favCount = 0;
 
-	var defalutTopics = ["cat", "dog", "bird"];
+	var defalutTopics = [	"hedgehog","armadillo","platypus","tiger","crocodile",
+							"alpaca","badger","iguana","lion"];
 
 	var topics = [];
 
@@ -106,9 +110,22 @@ $(document).ready(function()
 				removeButton.attr("data-animate", theArray[i] + ".gif");
 				removeButton.text("Remove");
 
+				var link = $("<a>");
+				link.attr("href", theArray[i] + ".gif");
+				link.attr("download", true);
+
+				var downloadButton = $("<button>");
+				downloadButton.attr("id", "btn-dl-" + i);
+				downloadButton.attr("class", "btn btn-success fas fa-download gifDownload");
+				downloadButton.attr("value", theArray[i] + ".gif");
+				downloadButton.attr("download", theArray[i] + ".gif");
+
+				link.html(downloadButton);
+
 				favImgDiv.append(newImage);
 				favImgDiv.append("<br>");
 				favImgDiv.append(removeButton);
+				favImgDiv.append(link)
 
 				favoritesArea.prepend(favImgDiv);
 			}
@@ -275,6 +292,13 @@ $(document).ready(function()
 				favCheck.attr("data-animate", animatedImage);
 				favCheck.text("Favorite");
 
+				var downloadButton = $("<button>");
+				downloadButton.attr("id", "btn-dl-" + i);
+				downloadButton.attr("class", "btn btn-success fas fa-download gifDownload");
+				downloadButton.attr("value", animatedImage);
+				downloadButton.attr("download", animatedImage);
+
+				ratingParagraph.prepend(downloadButton);
 				ratingParagraph.prepend(favCheck);
 
 				imgDiv.prepend(ratingParagraph);
@@ -337,9 +361,16 @@ $(document).ready(function()
 			removeButton.attr("data-animate", gifImg);
 			removeButton.text("Remove");
 
+			var downloadButton = $("<button>");
+			downloadButton.attr("id", "btn-dl-" + i);
+			downloadButton.attr("class", "btn btn-success fas fa-download gifDownload");
+			downloadButton.attr("value", gifImg);
+			downloadButton.attr("download", gifImg);
+
 			favImgDiv.append(newImage);
 			favImgDiv.append("<br>");
 			favImgDiv.append(removeButton);
+			favImgDiv.append(downloadButton);
 
 			$("#userFavorites").prepend(favImgDiv);
 
@@ -390,6 +421,14 @@ $(document).ready(function()
         	console.log("do nothing");
     	}
 
-    });
+	});
+	
+
+	$(document).on("click", "button.gifDownload", function() 
+	{
+		console.log("DOWNLOAD BUTTON CLICKED");
+
+		//window.open($(this).val());
+	});
 
 });
