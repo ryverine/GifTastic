@@ -27,7 +27,7 @@
 
 			<div class="row" >
 				<div id="header" class="col-12">
-					<p id="title">GifTastic Safari</p>
+					<p id="title">GIFtastic Safari</p>
 					<p id="subtitle">Find GIFs for all your favorite animals!</p>
 				</div>
 			</div> <!-- /row -->
@@ -37,8 +37,8 @@
 					<div id="inputArea" class="col-12">
 						<form> 
 							What animal are you looking for: <input id="newButtonText" type="text" name="btn-text">
-							<input id="btn-add" class="btn btn-primary" type="submit" value="Add">
-							<input id="btn-reset" class="btn btn-secondary" type="reset" value="Reset">
+							<button id="btn-add" class="btn btn-primary fas fa-plus-circle" type="submit"></button>
+							<button id="btn-reset" class="btn btn-secondary fas fa-ban" type="reset" value="Reset"></button>
 						</form>
 					</div>
 				</div> <!-- /row -->
@@ -51,14 +51,14 @@
 				
 				<div class="col-6">
 					<div class="miniHeader">
-						Wild and Wonderful GIFs <button id="btn-gif-clear" class="btn btn-secondary">Clear</button>
+						Wild and Wonderful GIFs <button id="btn-gif-clear" class="btn btn-secondary fas fa-ban"></button>
 					</div>
 					<div id="searchResults"></div>
 				</div>
 
 				<div class="col-6">
 					<div class="miniHeader">
-						Your Favorites <button id="btn-fav-clear" class="btn btn-secondary">Clear</button>
+						Your Favorites <button id="btn-fav-clear" class="btn btn-secondary fas fa-ban"></button>
 					</div>
 					<div id="userFavorites"></div>
 				</div>

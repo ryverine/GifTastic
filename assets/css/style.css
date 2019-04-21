@@ -18,43 +18,50 @@ button{
 	
 }
 
-.btn
+.btn-query
 {
 	font-size: 16px;
 	font-weight: bold;
 }
 
 .gif{
-	border: 2px solid #ffb999;
+	border: 3px solid #ffb999;
 }
 
 .gifDownload{
-	height: 47px;
+	height: 37px;
+}
+
+.titleRating{
+	margin: 0px;
+	padding: 0px;
+	font-size: 16px;
 }
 
 #header{
 	background: url(../images/congruent_pentagon.png);
-	border: 2px solid #76efa4;
+	border: 3px solid #76efa4;
 	margin: 10px 0px 0px 0px;
 	padding: 50px 0px 50px 0px;
 	text-align: center;
 }
 
-
-#inputArea{
-	background-color: #d6d9db;
-	border: 2px solid #6c757d;
-
-	/*border: 2px solid #e3ba68;*/
-}
-
 .miniHeader{
 	background: url(../images/congruent_pentagon.png);
-	border: 2px solid #76efa4;
+	border: 3px solid #76efa4;
 	margin: 5px 0px 0px 0px;
 	text-align: center;
 	font-size: 30px;
+	font-weight: bolder;
 	overflow: auto;
+}
+
+#inputArea{
+	background-color: #d6d9db;
+	border: 3px solid #6c757d;
+	padding: 10px;
+	
+	/*border: 3px solid #e3ba68;*/
 }
 
 #title{
@@ -67,14 +74,27 @@ button{
 	font-weight: bold;
 }
 
+
+
 #newButtonText{
-	width: 50%;
-	border: 2px solid #6c757d;
+	width: 55%;
+	border: 3px solid #6c757d;
+	vertical-align: text-bottom;
 }
 
 #gifArea{
 	background: url(../images/sakura.png);
-	border: 2px solid #ffb999;
+	border: 3px solid #ffb999;
+}
+
+#btn-add{
+	vertical-align: text-bottom;
+	margin-left: 5px;
+}
+
+#btn-reset{
+	vertical-align: text-bottom;
+	margin-left: 5px;
 }
 
 #btn-gif-clear{

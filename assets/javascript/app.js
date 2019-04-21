@@ -1,44 +1,9 @@
-
-
-	// Bonus Goals
-
-	// #1
-	// Ensure your app is fully mobile responsive.
-
-	// #2
-	// Allow users to request additional gifs to be added to the page.
-	// Each request should ADD 10 gifs to the page, NOT overwrite the existing gifs.
-
-	// #3
-	// List additional metadata (title, tags, etc) for each gif in a clean and readable format.
-
-	// #4
-	// Include a 1-click download button for each gif, this should work across device types.
-	// https://www.w3schools.com/howto/howto_css_download_button.asp
-	// https://fontawesome.com/icons/download?style=solid
-
-	// #4
-	// Integrate this search with additional APIs such as OMDB, or Bands in Town. 
-	// Be creative and build something you are proud to showcase in your portfolio
-	// 	PUBLIC API
-	// 	https://github.com/toddmotto/public-apis
-
-
-	// TENOR API
-	// https://tenor.com/gifapi/documentation
-
-	// OPEN GIF API
-	// https://www.programmableweb.com/api/open-gif
-
-
 $(document).ready(function() 
 {
-	console.log("PAGE LOADED");
-
 	var favCount = 0;
 
 	var defalutTopics = [	"hedgehog","armadillo","platypus","tiger","crocodile",
-							"alpaca","badger","iguana","lion"];
+							"warthog", "alpaca","badger","iguana","lion"];
 
 	var topics = [];
 
@@ -51,8 +16,6 @@ $(document).ready(function()
 
 	function loadFavorites()
 	{
-		console.log("loadFavorites()");
-
 		if (JSON.parse(localStorage.getItem('userFavorites')) != null)
 		{
 			favorites = JSON.parse(localStorage.getItem('userFavorites'));
@@ -64,8 +27,6 @@ $(document).ready(function()
 
 	function updateButtonArea(theArray)
 	{
-		console.log("updateButtonArea("+theArray+")");
-
 		var buttonArea = $("#buttonArea");
 		buttonArea.empty();
 
@@ -82,8 +43,6 @@ $(document).ready(function()
 
 	function updateFavoritesArea(theArray)
 	{
-		console.log("updateFavoritesArea("+theArray+")");
-
 		var favoritesArea = $("#userFavorites");
 		favoritesArea.empty();
 
@@ -103,16 +62,10 @@ $(document).ready(function()
 
 				var removeButton = $("<button>")
 				removeButton.attr("id", "btn-rmv-" + i)
-				removeButton.attr("class", "btn btn-danger favRemove");
+				removeButton.attr("class", "btn btn-danger fas fa-heart-broken favRemove");
 				removeButton.attr("name", theArray[i] + "_s.gif");
-				// removeButton.attr("value", favButton.val());
 				removeButton.attr("data-still", theArray[i] + "_s.gif");
 				removeButton.attr("data-animate", theArray[i] + ".gif");
-				removeButton.text("Remove");
-
-				var link = $("<a>");
-				link.attr("href", theArray[i] + ".gif");
-				link.attr("download", true);
 
 				var downloadButton = $("<button>");
 				downloadButton.attr("id", "btn-dl-" + i);
@@ -120,12 +73,18 @@ $(document).ready(function()
 				downloadButton.attr("value", theArray[i] + ".gif");
 				downloadButton.attr("download", theArray[i] + ".gif");
 
-				link.html(downloadButton);
+				var link = $("<a>");
+				link.attr("href", theArray[i] + ".gif");
+				link.attr("download", "");
+				link.attr("target", "_blank");
 
+				link.append(downloadButton);
+
+				
 				favImgDiv.append(newImage);
 				favImgDiv.append("<br>");
 				favImgDiv.append(removeButton);
-				favImgDiv.append(link)
+				favImgDiv.append(link);
 
 				favoritesArea.prepend(favImgDiv);
 			}
@@ -137,8 +96,6 @@ $(document).ready(function()
 
 	function loadTopics()
 	{
-		console.log("loadTopics()");
-
 		if (JSON.parse(localStorage.getItem("userQuickSelect")) != null)
 		{
 			var userQuickSelect = JSON.parse(localStorage.getItem("userQuickSelect"));
@@ -165,10 +122,7 @@ $(document).ready(function()
 
 	$("#btn-add").on("click", function() 
 	{
-		// prevent form from submitting
 		event.preventDefault();
-
-		console.log("ADD QUICK SELECT BUTTON CLICKED");
 
 		var newBtn = $("#newButtonText").val().trim().toUpperCase();
 
@@ -188,10 +142,7 @@ $(document).ready(function()
 
 	$("#btn-reset").on("click", function() 
 	{
-		// prevent form from submitting
 		event.preventDefault();
-
-		console.log("RESET QUICK SELECT BUTTON CLICKED");
 
 		if (topics.length > 0)
 		{
@@ -212,8 +163,6 @@ $(document).ready(function()
 	
 	$("#btn-fav-clear").on("click", function() 
 	{
-		console.log("CLEAR FAVORITES BUTTON CLICKED");
-
 		localStorage.removeItem("userFavorites");	
 
 		favorites = [];
@@ -225,16 +174,12 @@ $(document).ready(function()
 
 	$("#btn-gif-clear").on("click", function()
 	{
-		console.log("CLEAR GIFS BUTTON CLICKED");
-
 		$("#searchResults").empty();
 	});
 
 
 	$(document).on("click", "button.btn-query", function() 
 	{
-		console.log($(this).text().toUpperCase() + " BUTTON CLICKED");
-
 		var apiKey = "AYXRNvMf24hqgRG3UzDrrOKtm5HQv0Sj";
 		var numOfGif = 10;
 		var searchText = $(this).attr("data-btnText");
@@ -249,16 +194,12 @@ $(document).ready(function()
 
 		var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + searchText + "&api_key=" + apiKey + "&limit=" + numOfGif;
 
-		console.log("queryURL = " + queryURL);
-
 		var gifType = $(this).text();
 
 		$.ajax({
 			url: queryURL,
 			method: "GET"
 		}).then(function(response){
-
-			console.log(response);
 
 			var results = response.data;
 
@@ -268,7 +209,9 @@ $(document).ready(function()
 
 				var rating = results[i].rating;
 
-				var ratingParagraph = $("<p>").text("Rating: " + rating);
+				var ratingParagraph = $("<p>").text(results[i].title + " (Rating: " + rating + ")");
+				ratingParagraph.attr("class", "titleRating");
+
 				ratingParagraph.attr("class", "rating");
 
 				var stillImage = results[i].images.fixed_height_still.url;
@@ -280,17 +223,15 @@ $(document).ready(function()
 				newImage.attr("data-still", stillImage);
 				newImage.attr("data-animate", animatedImage);
 				newImage.attr("data-state", "still");
-				//newImage.attr("data-img-type", gifType);
 				newImage.attr("class", "gif");
 
 				var favCheck = $("<button>");
 				favCheck.attr("id", "btn-fav-" + i)
-				favCheck.attr("class", "btn btn-primary favCheck");
+				favCheck.attr("class", "btn btn-primary fas fa-heart favCheck");
 				favCheck.attr("name", stillImage);
 				favCheck.attr("value", gifType);
 				favCheck.attr("data-still", stillImage);
 				favCheck.attr("data-animate", animatedImage);
-				favCheck.text("Favorite");
 
 				var downloadButton = $("<button>");
 				downloadButton.attr("id", "btn-dl-" + i);
@@ -298,12 +239,17 @@ $(document).ready(function()
 				downloadButton.attr("value", animatedImage);
 				downloadButton.attr("download", animatedImage);
 
-				ratingParagraph.prepend(downloadButton);
-				ratingParagraph.prepend(favCheck);
+				var link = $("<a>");
+				link.attr("href", animatedImage);
+				link.attr("download", "");
+				link.attr("target", "_blank");
+				link.append(downloadButton);
 
-				imgDiv.prepend(ratingParagraph);
-
+				imgDiv.append("<br>");
+				imgDiv.append(favCheck);
+				imgDiv.append(link);
 				imgDiv.prepend(newImage);
+				imgDiv.prepend(ratingParagraph);
 
 				$("#searchResults").prepend(imgDiv);
 			}
@@ -314,8 +260,6 @@ $(document).ready(function()
 
 	$(document).on("click", "button.favCheck", function() 
 	{
-		console.log("FAVORITE BUTTON CLICKED");
-
 		var favButton = $(this);
 		var stillImg = favButton.attr("data-still");
 		var gifImg = favButton.attr("data-animate");
@@ -351,26 +295,29 @@ $(document).ready(function()
 			newImage.attr("data-still", stillImg);
 			newImage.attr("data-animate", gifImg);
 			newImage.attr("data-state", "still");
-			//newImage.attr("data-img-type", favButton.val());
 			newImage.attr("class", "gif");
 
 			var removeButton = $("<button>")
 			removeButton.attr("id", "btn-rmv-" + favCount)
-			removeButton.attr("class", "btn btn-danger favRemove");
+			removeButton.attr("class", "btn btn-danger fas fa-heart-broken favRemove");
 			removeButton.attr("data-still", stillImg);
 			removeButton.attr("data-animate", gifImg);
-			removeButton.text("Remove");
 
 			var downloadButton = $("<button>");
 			downloadButton.attr("id", "btn-dl-" + i);
 			downloadButton.attr("class", "btn btn-success fas fa-download gifDownload");
-			downloadButton.attr("value", gifImg);
 			downloadButton.attr("download", gifImg);
+
+			var link = $("<a>");
+			link.attr("href", gifImg);
+			link.attr("download", "");
+			link.attr("target", "_blank");
+			link.append(downloadButton);
 
 			favImgDiv.append(newImage);
 			favImgDiv.append("<br>");
 			favImgDiv.append(removeButton);
-			favImgDiv.append(downloadButton);
+			favImgDiv.append(link);
 
 			$("#userFavorites").prepend(favImgDiv);
 
@@ -382,8 +329,6 @@ $(document).ready(function()
 
 	$(document).on("click", "button.favRemove", function() 
 	{
-		console.log("REMOVE BUTTON CLICKED");
-
 		var remButton = $(this);
 		var remButton_data_animate = remButton.attr("data-animate").split(".gif");
 		var imgToRemove = remButton_data_animate[0];
@@ -400,10 +345,6 @@ $(document).ready(function()
 
 	$(document).on("click", "img.gif", function() 
 	{
-		// console.log( $(this).attr("data-img-type").toUpperCase() + " GIF CLICKED");
-
-		console.log("GIF CLICKED");
-
 		var state = $(this).attr("data-state");
 		
 		if (state === 'still')
@@ -422,13 +363,4 @@ $(document).ready(function()
     	}
 
 	});
-	
-
-	$(document).on("click", "button.gifDownload", function() 
-	{
-		console.log("DOWNLOAD BUTTON CLICKED");
-
-		//window.open($(this).val());
-	});
-
 });
